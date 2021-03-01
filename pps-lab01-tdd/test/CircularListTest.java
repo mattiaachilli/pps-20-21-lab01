@@ -77,4 +77,9 @@ public class CircularListTest {
         }
     }
 
+    @Test
+    public void testEmptyNext() {
+        assertTrue(circularList.next().isEmpty());
+    }
+
 }
