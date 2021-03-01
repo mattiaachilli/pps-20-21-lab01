@@ -9,7 +9,7 @@ public class CircularListTest {
 
     private CircularList circularList;
 
-    @BeforeAll
+    @BeforeEach
     public void init() {
         this.circularList = new CircularListImpl();
     }
@@ -18,11 +18,6 @@ public class CircularListTest {
     public void testAdd() {
         circularList.add(0);
         Assertions.assertEquals(circularList.size(), 1);
-    }
-
-    @Disabled
-    @Test public void testTodo(){
-        Assertions.fail();
     }
 
 }

@@ -1,18 +1,26 @@
 package lab01.tdd;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
 
+    private final List<Integer> circularList;
+
+    public CircularListImpl() {
+        this.circularList = new ArrayList<>();
+    }
 
     @Override
     public void add(int element) {
-
+        this.circularList.add(Objects.requireNonNull(element));
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.circularList.size();
     }
 
     @Override
