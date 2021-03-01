@@ -28,4 +28,9 @@ public class CircularListTest {
         Assertions.assertEquals(circularList.size(), 3);
     }
 
+    @Test
+    public void testIsEmpty() {
+        Assertions.assertTrue(circularList.isEmpty());
+    }
+
 }

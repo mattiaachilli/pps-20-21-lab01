@@ -2,6 +2,7 @@ import lab01.example.model.AccountHolder;
 import lab01.example.model.BankAccount;
 import lab01.example.model.SimpleBankAccount;
 
+import lab01.example.model.SimpleBankAccountAtm;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,6 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the SimpleBankAccount implementation
  */
 class SimpleBankAccountTest {
+
+
+    private final static int DEPOSIT_VALUE = 100;
+    private final static int WITHDRAW_VALUE = 70;
 
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
@@ -20,9 +25,9 @@ class SimpleBankAccountTest {
     void beforeEach(){
         setAccountHolder(new AccountHolder("Mario", "Rossi", 1));
         setBankAccount(new SimpleBankAccount(accountHolder, 0));
-        this.setDepositValue(100);
-        this.setWithdrawValue(70);
-        this.setExceptedValue(depositValue);
+        this.setDepositValue(DEPOSIT_VALUE);
+        this.setWithdrawValue(WITHDRAW_VALUE);
+        this.setExceptedValue(DEPOSIT_VALUE);
     }
 
     protected final void setBankAccount(final BankAccount bankAccount) {
@@ -43,6 +48,14 @@ class SimpleBankAccountTest {
 
     protected final void setExceptedValue(final int exceptedValue) {
         this.exceptedValue = exceptedValue;
+    }
+
+    protected final BankAccount getBankAccount() {
+        return this.bankAccount;
+    }
+
+    protected final AccountHolder getAccountHolder() {
+        return this.accountHolder;
     }
 
     @Test

@@ -15,7 +15,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void add(int element) {
-        this.circularList.add(Objects.requireNonNull(element));
+        this.circularList.add(element);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return circularList.isEmpty();
     }
 
     @Override
