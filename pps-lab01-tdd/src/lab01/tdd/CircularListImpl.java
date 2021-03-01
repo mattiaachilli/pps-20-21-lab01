@@ -36,7 +36,7 @@ public class CircularListImpl implements CircularList {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
             optionalInteger = Optional.of(circularList.get(this.index));
-            this.index = (index + 1) % size();
+            this.index = (this.index + 1) % size();
         }
         return optionalInteger;
     }

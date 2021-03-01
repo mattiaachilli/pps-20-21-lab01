@@ -15,28 +15,31 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircularListTest {
 
     private CircularList circularList;
+    private final static int NUMBER_OF_ELEMENT_TO_ADD = 3;
 
     @BeforeEach
     public void init() {
         this.circularList = new CircularListImpl();
     }
 
-    private void addElementsCircularList(int... elements) {
-        for (int value : elements) {
-            circularList.add(value);
+    private void addElementsToCircularList(final int nElementToAdd) {
+        for (int i = 0; i < nElementToAdd; i++) {
+            circularList.add(i);
         }
     }
 
-    @Test
-    public void testAdd() {
-        addElementsCircularList(0, 1);
-        assertEquals(circularList.size(), 2);
+    private List<Optional<Integer>> getOptionalList(final int numberElements) {
+        final List<Optional<Integer>> optionalValue = new ArrayList<>();
+        for (int i = 0; i < numberElements; i++) {
+            optionalValue.add(circularList.next());
+        }
+        return optionalValue;
     }
 
     @Test
-    public void testSize() {
-        addElementsCircularList(0, 1, 2);
-        assertEquals(circularList.size(), 3);
+    public void testAddAndSize() {
+        addElementsToCircularList(NUMBER_OF_ELEMENT_TO_ADD);
+        assertEquals(circularList.size(), NUMBER_OF_ELEMENT_TO_ADD);
     }
 
     @Test
@@ -46,21 +49,31 @@ public class CircularListTest {
 
     @Test
     public void testIsNotEmpty() {
-        addElementsCircularList(0, 1, 2);
+        addElementsToCircularList(NUMBER_OF_ELEMENT_TO_ADD);
         assertFalse(circularList.isEmpty());
     }
 
     @Test
     public void testSimpleNext() {
-        final List<Optional<Integer>> optionalValue = new ArrayList<>();
-        addElementsCircularList(0, 1, 2);
-        for (int i = 0; i < 3; i++) {
-            optionalValue.add(circularList.next());
-        }
+        addElementsToCircularList(NUMBER_OF_ELEMENT_TO_ADD);
+        final List<Optional<Integer>> optionalListValue = this.getOptionalList(NUMBER_OF_ELEMENT_TO_ADD);
 
-        for (int i = 0; i < 3; i++) {
-            assertFalse(optionalValue.get(i).isEmpty());
-            assertEquals(i, optionalValue.get(i).get());
+        for (int i = 0; i < NUMBER_OF_ELEMENT_TO_ADD; i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(i, optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testCircularNext() {
+        addElementsToCircularList(NUMBER_OF_ELEMENT_TO_ADD);
+        final List<Optional<Integer>> optionalListValue = this.getOptionalList(NUMBER_OF_ELEMENT_TO_ADD);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < NUMBER_OF_ELEMENT_TO_ADD; j++) {
+                assertFalse(optionalListValue.get(j).isEmpty());
+                assertEquals(j, optionalListValue.get(j).get());
+            }
         }
     }
 
