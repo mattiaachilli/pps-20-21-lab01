@@ -6,7 +6,7 @@ package lab01.example.model;
  */
 public class SimpleBankAccountAtm extends SimpleBankAccount implements BankAccount {
 
-    private final static int FEE = 1;
+    public final static int FEE = 1;
 
     public SimpleBankAccountAtm(AccountHolder holder, double balance) {
         super(holder, balance);
