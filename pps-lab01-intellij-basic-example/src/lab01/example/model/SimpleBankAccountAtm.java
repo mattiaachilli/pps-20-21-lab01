@@ -6,17 +6,19 @@ package lab01.example.model;
  */
 public class SimpleBankAccountAtm extends SimpleBankAccount implements BankAccount {
 
+    private final static int FEE = 1;
+
     public SimpleBankAccountAtm(AccountHolder holder, double balance) {
         super(holder, balance);
     }
 
     @Override
     public void deposit(int usrID, double amount) {
-        super.deposit(usrID, amount - 1);
+        super.deposit(usrID, amount - FEE);
     }
 
     @Override
     public void withdraw(int usrID, double amount) {
-        super.withdraw(usrID, amount - 1);
+        super.withdraw(usrID, amount - FEE);
     }
 }
