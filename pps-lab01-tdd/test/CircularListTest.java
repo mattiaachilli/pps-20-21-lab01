@@ -20,4 +20,12 @@ public class CircularListTest {
         Assertions.assertEquals(circularList.size(), 1);
     }
 
+    @Test
+    public void testSize() {
+        circularList.add(0);
+        circularList.add(1);
+        circularList.add(2);
+        Assertions.assertEquals(circularList.size(), 3);
+    }
+
 }
