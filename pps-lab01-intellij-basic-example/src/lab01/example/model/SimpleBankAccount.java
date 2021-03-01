@@ -14,6 +14,7 @@ public class SimpleBankAccount implements BankAccount {
         this.holder = holder;
         this.balance = balance;
     }
+
     @Override
     public AccountHolder getHolder(){
         return this.holder;

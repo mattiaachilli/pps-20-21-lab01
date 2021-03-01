@@ -19,6 +19,12 @@ class SimpleBankAccountTest {
         bankAccount = new SimpleBankAccount(accountHolder, 0);
     }
 
+    protected void setBankAccount(final BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    protected void setAccountHolder(final AccountHolder accountHolder) { this.accountHolder = accountHolder; }
+
     @Test
     void testInitialBalance() {
         assertEquals(0, bankAccount.getBalance());
