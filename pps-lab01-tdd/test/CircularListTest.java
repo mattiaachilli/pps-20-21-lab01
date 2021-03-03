@@ -1,5 +1,7 @@
 import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
+import lab01.tdd.EvenStrategy;
+import lab01.tdd.SelectStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,11 +30,17 @@ public class CircularListTest {
         }
     }
 
-    private List<Optional<Integer>> getAllNextOptionalList(final int numberElements) {
+    private List<Optional<Integer>> getAllNextOptionalList(final int numberElements, final SelectStrategy strategy) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
         if (numberElements > 0) {
-            for (int i = 0; i < numberElements; i++) {
-                optionalValue.add(circularList.next());
+            if(strategy != null) {
+                for (int i = 0; i < numberElements; i++) {
+                    optionalValue.add(circularList.next(strategy));
+                }
+            } else {
+                for (int i = 0; i < numberElements; i++) {
+                    optionalValue.add(circularList.next());
+                }
             }
         }
         return optionalValue;
@@ -75,7 +83,7 @@ public class CircularListTest {
     public void testSimpleNext() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = Arrays.asList(1, 2, 3);
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), null);
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -87,7 +95,7 @@ public class CircularListTest {
     public void testCircularNext() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = Arrays.asList(1, 2, 3, 1, 2, 3);
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), null);
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -183,4 +191,15 @@ public class CircularListTest {
         }
     }
 
+    @Test
+    public void testNextEvenStrategy() {
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14));
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
 }
