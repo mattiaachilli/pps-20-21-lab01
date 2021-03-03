@@ -70,7 +70,7 @@ public class CircularListTest {
     @Test
     public void testSimpleNext() {
         addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3));
+        final List<Integer> exceptedList = Arrays.asList(1, 2, 3);
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -82,7 +82,7 @@ public class CircularListTest {
     @Test
     public void testCircularNext() {
         addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3, 1, 2, 3));
+        final List<Integer> exceptedList = Arrays.asList(1, 2, 3, 1, 2, 3);
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -99,7 +99,7 @@ public class CircularListTest {
     @Test
     public void testSimplePrevious() {
         addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 2));
+        final List<Integer> exceptedList = Arrays.asList(1, 3, 2);
         final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -111,7 +111,7 @@ public class CircularListTest {
     @Test
     public void testCircularPrevious() {
         addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 2, 1, 3, 2));
+        final List<Integer> exceptedList = Arrays.asList(1, 3, 2, 1, 3, 2);
         final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -128,8 +128,15 @@ public class CircularListTest {
     @Test
     public void testPreviousNextCircularTest() {
         addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 1));
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 1));
+        final List<Optional<Integer>> optionalListValue = Arrays.asList(
+                circularList.next(), circularList.next(),
+                circularList.previous());
 
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
     }
 
 }
