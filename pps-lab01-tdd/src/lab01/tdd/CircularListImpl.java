@@ -1,19 +1,19 @@
 package lab01.tdd;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
 
     private final List<Integer> circularList;
     private int index;
+    private boolean first;
 
     public CircularListImpl() {
         this.circularList = new ArrayList<>();
         this.index = 0;
+        this.first = true;
     }
 
     @Override
@@ -43,7 +43,16 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> previous() {
-        return Optional.empty();
+        Optional<Integer> optionalInteger = Optional.empty();
+        if (size() > 0) {
+            if(this.first) {
+                this.first = false;
+            } else {
+                this.index = this.index - 1 < 0 ? circularList.size() - 1 : --this.index;
+            }
+            optionalInteger = Optional.of(circularList.get(this.index));
+        }
+        return optionalInteger;
     }
 
     @Override
