@@ -30,16 +30,20 @@ public class CircularListTest {
 
     private List<Optional<Integer>> getAllNextOptionalList(final int numberElements) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
-        for (int i = 0; i < numberElements; i++) {
-            optionalValue.add(circularList.next());
+        if (numberElements > 0) {
+            for (int i = 0; i < numberElements; i++) {
+                optionalValue.add(circularList.next());
+            }
         }
         return optionalValue;
     }
 
     private List<Optional<Integer>> getAllPreviousOptionalList(final int numberElements) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
-        for (int i = 0; i < numberElements; i++) {
-            optionalValue.add(circularList.previous());
+        if (numberElements > 0) {
+            for (int i = 0; i < numberElements; i++) {
+                optionalValue.add(circularList.previous());
+            }
         }
         return optionalValue;
     }
@@ -148,6 +152,30 @@ public class CircularListTest {
         optionalListValue.add(circularList.next());
         circularList.reset();
         optionalListValue.add(circularList.next());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testComplexReset() {
+        addElementsToCircularList(1, 2, 3, 4, 5);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3, 1, 5, 4, 1, 2, 3));
+        final List<Optional<Integer>> optionalListValue = new ArrayList<>();
+
+        for(int i = 0; i < 3; i++) {
+            optionalListValue.add(circularList.next());
+        }
+        circularList.reset();
+        for(int i = 0; i < 3; i++) {
+            optionalListValue.add(circularList.previous());
+        }
+        circularList.reset();
+        for(int i = 0; i < 3; i++) {
+            optionalListValue.add(circularList.next());
+        }
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
