@@ -8,12 +8,12 @@ public class CircularListImpl implements CircularList {
 
     private final List<Integer> circularList;
     private int index;
-    private boolean first;
+    private boolean firstTime;
 
     public CircularListImpl() {
         this.circularList = new ArrayList<>();
         this.index = 0;
-        this.first = true;
+        this.firstTime = true;
     }
 
     @Override
@@ -35,8 +35,8 @@ public class CircularListImpl implements CircularList {
     public Optional<Integer> next() {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
-            if (this.first) {
-                this.first = false;
+            if (this.firstTime) {
+                this.firstTime = false;
             } else {
                 if (this.index + 1 == circularList.size()) {
                     this.index = 0;
@@ -53,8 +53,8 @@ public class CircularListImpl implements CircularList {
     public Optional<Integer> previous() {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
-            if(this.first) {
-                this.first = false;
+            if(this.firstTime) {
+                this.firstTime = false;
             } else {
                 if (this.index - 1 < 0) {
                     this.index = circularList.size() - 1;
@@ -69,7 +69,8 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void reset() {
-
+        this.index = 0;
+        this.firstTime = true;
     }
 
     @Override

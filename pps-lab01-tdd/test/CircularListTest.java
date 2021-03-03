@@ -139,4 +139,20 @@ public class CircularListTest {
         }
     }
 
+    @Test
+    public void testSimpleReset() {
+        addElementsToCircularList(1, 2);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 1));
+        final List<Optional<Integer>> optionalListValue = new ArrayList<>();
+
+        optionalListValue.add(circularList.next());
+        circularList.reset();
+        optionalListValue.add(circularList.next());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
 }
