@@ -45,12 +45,8 @@ public class CircularListImpl implements CircularList {
     public Optional<Integer> previous() {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
-            if(this.first) {
-                this.first = false;
-            } else {
-                this.index = this.index - 1 < 0 ? circularList.size() - 1 : --this.index;
-            }
             optionalInteger = Optional.of(circularList.get(this.index));
+            this.index = this.index - 1 < 0 ? circularList.size() - 1 : --this.index;
         }
         return optionalInteger;
     }

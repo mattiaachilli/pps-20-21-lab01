@@ -28,7 +28,7 @@ public class CircularListTest {
         }
     }
 
-    private List<Optional<Integer>> getNextOptionalList(final int numberElements) {
+    private List<Optional<Integer>> getAllNextOptionalList(final int numberElements) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
         for (int i = 0; i < numberElements; i++) {
             optionalValue.add(circularList.next());
@@ -36,7 +36,7 @@ public class CircularListTest {
         return optionalValue;
     }
 
-    private List<Optional<Integer>> getPreviousOptionalList(final int numberElements) {
+    private List<Optional<Integer>> getAllPreviousOptionalList(final int numberElements) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
         for (int i = 0; i < numberElements; i++) {
             optionalValue.add(circularList.previous());
@@ -71,7 +71,7 @@ public class CircularListTest {
     public void testSimpleNext() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3));
-        final List<Optional<Integer>> optionalListValue = this.getNextOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -83,7 +83,7 @@ public class CircularListTest {
     public void testCircularNext() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3, 1, 2, 3));
-        final List<Optional<Integer>> optionalListValue = this.getNextOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -100,7 +100,7 @@ public class CircularListTest {
     public void testSimplePrevious() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 2));
-        final List<Optional<Integer>> optionalListValue = this.getPreviousOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -112,7 +112,7 @@ public class CircularListTest {
     public void testCircularPrevious() {
         addElementsToCircularList(1, 2, 3);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 2, 1, 3, 2));
-        final List<Optional<Integer>> optionalListValue = this.getPreviousOptionalList(exceptedList.size());
+        final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
@@ -123,6 +123,13 @@ public class CircularListTest {
     @Test
     public void testEmptyPrevious() {
         assertTrue(circularList.previous().isEmpty());
+    }
+
+    @Test
+    public void testPreviousNextCircularTest() {
+        addElementsToCircularList(1, 2, 3);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 1));
+
     }
 
 }
