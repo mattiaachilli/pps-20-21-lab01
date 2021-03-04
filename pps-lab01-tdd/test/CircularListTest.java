@@ -226,34 +226,9 @@ public class CircularListTest {
     }
 
     @Test
-    public void testNextOddCircularStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 1, 3, 5));
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new OddStrategy());
-
-        for (int i = 0; i < exceptedList.size(); i++) {
-            assertFalse(optionalListValue.get(i).isEmpty());
-            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
-        }
-    }
-
-
-    @Test
     public void testMultipleOfTwoStrategy() {
         addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14));
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfTwoStrategy());
-
-        for (int i = 0; i < exceptedList.size(); i++) {
-            assertFalse(optionalListValue.get(i).isEmpty());
-            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
-        }
-    }
-
-    @Test
-    public void testMultipleOfTwoCircularStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 2, 4, 6));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfTwoStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -274,15 +249,9 @@ public class CircularListTest {
         }
     }
 
+    /* Abstract Factory */
     @Test
-    public void testEqualOfTwoCircularStrategy() {
-        addElementsToCircularList(2, 3, 6, 2, 5, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 2, 2, 2, 2, 2, 2));
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EqualTwoStrategy());
+    public void testAbstractFactoryStrategy() {
 
-        for (int i = 0; i < exceptedList.size(); i++) {
-            assertFalse(optionalListValue.get(i).isEmpty());
-            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
-        }
     }
 }
