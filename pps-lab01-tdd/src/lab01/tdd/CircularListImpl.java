@@ -84,6 +84,9 @@ public class CircularListImpl implements CircularList {
                 if (strategy.apply(circularList.get(i))) {
                     optionalInteger = Optional.of(circularList.get(i));
                     this.index = i + 1;
+                    if (this.index == circularList.size()) {
+                        this.index = 0;
+                    }
                     return optionalInteger;
                 }
             }

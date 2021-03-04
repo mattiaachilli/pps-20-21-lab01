@@ -202,8 +202,8 @@ public class CircularListTest {
 
     @Test
     public void testNextEvenCircularStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 0, 2, 4));
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 16, 0, 2, 4));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -215,7 +215,19 @@ public class CircularListTest {
     @Test
     public void testNextOddStrategy() {
         addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15));
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 1, 3, 5));
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new OddStrategy());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testNextOddCircularStrategy() {
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 1, 3, 5));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new OddStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -228,7 +240,7 @@ public class CircularListTest {
     @Test
     public void testMultipleOfStrategy() {
         addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14));
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 1, 3));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
