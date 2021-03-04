@@ -1,20 +1,51 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
+import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class StrategyFactoryTest extends CircularListTest {
+public class StrategyFactoryTest {
 
-    private final static List<Integer> LIST_OF_NUMBER = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     private CircularList circularList;
-/*
+    private StrategyFactory strategyFactory = new StrategyFactoryImpl();
+
     @BeforeEach
     public void init() {
-        super.addElementsToCircularList(1, 2, 3,
         this.circularList = new CircularListImpl();
-    }*/
+        CircularListTest.addElementsToCircularList(CircularListTest.LIST_OF_NUMBER, circularList);
+    }
+
+    @Test
+    public void testAbstractFactoryNextEvenStrategy() {
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 2, 4, 6));
+        final SelectStrategy nextEvenStrategy = strategyFactory.createEvenStrategy();
+
+        final List<Optional<Integer>> optionalListValue = CircularListTest.getAllNextOptionalList(exceptedList.size(), nextEvenStrategy, circularList);
+
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testAbstractFactoryNextOddStrategy() {
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9));
+        final SelectStrategy nextOddStrategy = strategyFactory.createOddStrategy();
+
+        final List<Optional<Integer>> optionalListValue = CircularListTest.getAllNextOptionalList(exceptedList.size(), nextOddStrategy, circularList);
+
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
 }
