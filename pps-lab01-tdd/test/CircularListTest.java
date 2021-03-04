@@ -1,7 +1,4 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
-import lab01.tdd.EvenStrategy;
-import lab01.tdd.SelectStrategy;
+import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -216,10 +213,23 @@ public class CircularListTest {
     }
 
     @Test
+    public void testNextOddStrategy() {
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15));
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new OddStrategy());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+
+    @Test
     public void testMultipleOfStrategy() {
         addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14));
-        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
