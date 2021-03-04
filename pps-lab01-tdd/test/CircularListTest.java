@@ -192,9 +192,21 @@ public class CircularListTest {
     }
 
     @Test
-    public void testNextEvenStrategy() {
+    public void testNextEvenSimpleStrategy() {
         addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14));
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testNextEvenCircularStrategy() {
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 0, 2, 4));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
