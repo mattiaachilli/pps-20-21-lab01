@@ -248,4 +248,16 @@ public class CircularListTest {
             assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
         }
     }
+
+    @Test
+    public void testMultipleOfTwoCircularStrategy() {
+        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14, 2, 4, 6));
+        final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfTwoStrategy());
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
 }
