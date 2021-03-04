@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class StrategyFactoryTest {
 
     private CircularList circularList;
-    private StrategyFactory strategyFactory = new StrategyFactoryImpl();
+    private final StrategyFactory strategyFactory = new StrategyFactoryImpl();
+    private final static int NUMBER_MULTIPLE_EQUAL = 3;
 
     @BeforeEach
     public void init() {
@@ -41,6 +42,34 @@ public class StrategyFactoryTest {
         final SelectStrategy nextOddStrategy = strategyFactory.createOddStrategy();
 
         final List<Optional<Integer>> optionalListValue = CircularListTest.getAllNextOptionalList(exceptedList.size(), nextOddStrategy, circularList);
+
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testAbstractFactoryNextMultipleOfStrategy() {
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(3, 6, 9));
+        final SelectStrategy nextMultipleOfStrategy = strategyFactory.createMultipleOfStrategy(NUMBER_MULTIPLE_EQUAL);
+
+        final List<Optional<Integer>> optionalListValue = CircularListTest.getAllNextOptionalList(exceptedList.size(), nextMultipleOfStrategy, circularList);
+
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertFalse(optionalListValue.get(i).isEmpty());
+            assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testAbstractFactoryNextEqualOfStrategy() {
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(3, 3));
+        final SelectStrategy nextEqualOfStrategy = strategyFactory.createEqualOfStrategy(NUMBER_MULTIPLE_EQUAL);
+
+        final List<Optional<Integer>> optionalListValue = CircularListTest.getAllNextOptionalList(exceptedList.size(), nextEqualOfStrategy, circularList);
 
 
         for (int i = 0; i < exceptedList.size(); i++) {

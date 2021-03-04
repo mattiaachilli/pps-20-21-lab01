@@ -2,7 +2,7 @@ package lab01.tdd;
 
 public class MultipleOfStrategy implements SelectStrategy {
 
-    private int multipleNumber;
+    private final int multipleNumber;
 
     public MultipleOfStrategy(final int multipleNumber) {
         this.multipleNumber = multipleNumber;

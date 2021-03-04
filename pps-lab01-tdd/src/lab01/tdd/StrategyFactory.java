@@ -10,5 +10,5 @@ public interface StrategyFactory {
 
     public SelectStrategy createMultipleOfStrategy(final int number);
 
-    public SelectStrategy createEqualStrategy(final int number);
+    public SelectStrategy createEqualOfStrategy(final int number);
 }

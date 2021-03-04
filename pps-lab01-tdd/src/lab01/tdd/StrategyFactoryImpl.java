@@ -1,5 +1,8 @@
 package lab01.tdd;
 
+/*
+Implementation StrategyFactory
+ */
 public class StrategyFactoryImpl implements StrategyFactory {
     @Override
 
@@ -18,7 +21,7 @@ public class StrategyFactoryImpl implements StrategyFactory {
     }
 
     @Override
-    public SelectStrategy createEqualStrategy(final int number) {
-        return new EqualStrategy(number);
+    public SelectStrategy createEqualOfStrategy(final int number) {
+        return new EqualOfStrategy(number);
     }
 }

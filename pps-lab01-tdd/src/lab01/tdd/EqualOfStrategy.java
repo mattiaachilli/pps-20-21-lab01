@@ -1,9 +1,9 @@
 package lab01.tdd;
 
-public class EqualStrategy implements SelectStrategy {
-    private int equalNumber;
+public class EqualOfStrategy implements SelectStrategy {
+    private final int equalNumber;
 
-    public EqualStrategy(final int equalNumber) {
+    public EqualOfStrategy(final int equalNumber) {
         this.equalNumber = equalNumber;
     }
 

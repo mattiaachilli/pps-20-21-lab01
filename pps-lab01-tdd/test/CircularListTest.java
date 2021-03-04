@@ -16,6 +16,7 @@ public class CircularListTest {
 
     private CircularList circularList;
     private final static int NUMBER_MULTIPLE_EQUAL = 2;
+    private final static int WRONG_NUMBER_MULTIPLE_EQUAL = 11;
     protected final static List<Integer> LIST_OF_NUMBER = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
 
@@ -244,11 +245,22 @@ public class CircularListTest {
     public void testEqualOfTwoStrategy() {
         addElementsToCircularList(List.of(2, 3, 6, 2, 5, 2, 3), circularList);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 2, 2));
-        final List<Optional<Integer>> optionalListValue = getAllNextOptionalList(exceptedList.size(), new EqualStrategy(NUMBER_MULTIPLE_EQUAL), circularList);
+        final List<Optional<Integer>> optionalListValue = getAllNextOptionalList(exceptedList.size(), new EqualOfStrategy(NUMBER_MULTIPLE_EQUAL), circularList);
 
         for (int i = 0; i < exceptedList.size(); i++) {
             assertFalse(optionalListValue.get(i).isEmpty());
             assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
+        }
+    }
+
+    @Test
+    public void testWrongEqualOfStrategy() {
+        addElementsToCircularList(LIST_OF_NUMBER, circularList);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(11, 11, 11));
+        final List<Optional<Integer>> optionalListValue = getAllNextOptionalList(exceptedList.size(), new EqualOfStrategy(WRONG_NUMBER_MULTIPLE_EQUAL), circularList);
+
+        for (int i = 0; i < exceptedList.size(); i++) {
+            assertTrue(optionalListValue.get(i).isEmpty());
         }
     }
 }
