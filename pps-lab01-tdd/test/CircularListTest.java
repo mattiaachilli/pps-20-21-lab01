@@ -15,14 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircularListTest {
 
     private CircularList circularList;
+    protected final static List<Integer> LIST_OF_NUMBER = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
 
     @BeforeEach
     public void init() {
         this.circularList = new CircularListImpl();
     }
 
-    private void addElementsToCircularList(final int...integers) {
-        for (final int element : integers) {
+    protected final CircularList getCircularList() {
+        return this.circularList;
+    }
+
+    protected final void addElementsToCircularList(final List<Integer> integerList) {
+        for (final int element : integerList) {
             circularList.add(element);
         }
     }
@@ -61,8 +67,8 @@ public class CircularListTest {
 
     @Test
     public void testMultipleAddAndSize() {
-        addElementsToCircularList(1, 2, 3);
-        assertEquals(circularList.size(), 3);
+        addElementsToCircularList(LIST_OF_NUMBER);
+        assertEquals(circularList.size(), LIST_OF_NUMBER.size());
     }
 
     @Test
@@ -72,14 +78,14 @@ public class CircularListTest {
 
     @Test
     public void testIsNotEmpty() {
-        addElementsToCircularList(1, 2, 3);
+        addElementsToCircularList(LIST_OF_NUMBER);
         assertFalse(circularList.isEmpty());
     }
 
     @Test
     public void testSimpleNext() {
-        addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = Arrays.asList(1, 2, 3);
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = LIST_OF_NUMBER;
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), null);
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -90,8 +96,8 @@ public class CircularListTest {
 
     @Test
     public void testCircularNext() {
-        addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = Arrays.asList(1, 2, 3, 1, 2, 3);
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3);
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), null);
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -107,8 +113,8 @@ public class CircularListTest {
 
     @Test
     public void testSimplePrevious() {
-        addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = Arrays.asList(1, 3, 2);
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = Arrays.asList(1, 10, 9, 8, 7, 6, 5);
         final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -119,8 +125,8 @@ public class CircularListTest {
 
     @Test
     public void testCircularPrevious() {
-        addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = Arrays.asList(1, 3, 2, 1, 3, 2);
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = Arrays.asList(1, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 10);
         final List<Optional<Integer>> optionalListValue = this.getAllPreviousOptionalList(exceptedList.size());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -136,8 +142,8 @@ public class CircularListTest {
 
     @Test
     public void testPreviousNextCircular() {
-        addElementsToCircularList(1, 2, 3);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 1));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 1, 10, 1));
         final List<Optional<Integer>> optionalListValue = Arrays.asList(
                 circularList.next(), circularList.next(),
                 circularList.previous(), circularList.previous(), circularList.next());
@@ -150,7 +156,7 @@ public class CircularListTest {
 
     @Test
     public void testSimpleReset() {
-        addElementsToCircularList(1, 2);
+        addElementsToCircularList(LIST_OF_NUMBER);
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 1));
         final List<Optional<Integer>> optionalListValue = new ArrayList<>();
 
@@ -166,8 +172,8 @@ public class CircularListTest {
 
     @Test
     public void testComplexReset() {
-        addElementsToCircularList(1, 2, 3, 4, 5);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3, 1, 5, 4, 1, 2, 3));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 2, 3, 1, 10, 9, 1, 2, 3));
         final List<Optional<Integer>> optionalListValue = new ArrayList<>();
 
         for(int i = 0; i < 3; i++) {
@@ -191,8 +197,8 @@ public class CircularListTest {
     /* Strategy test */
     @Test
     public void testNextEvenSimpleStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -203,8 +209,8 @@ public class CircularListTest {
 
     @Test
     public void testNextEvenCircularStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 16, 0, 2, 4));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 2, 4, 6));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EvenStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -215,8 +221,8 @@ public class CircularListTest {
 
     @Test
     public void testNextOddStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9, 11, 13, 15, 1, 3, 5));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new OddStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -227,8 +233,8 @@ public class CircularListTest {
 
     @Test
     public void testMultipleOfTwoStrategy() {
-        addElementsToCircularList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10, 12, 14));
+        addElementsToCircularList(LIST_OF_NUMBER);
+        final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new MultipleOfTwoStrategy());
 
         for (int i = 0; i < exceptedList.size(); i++) {
@@ -239,7 +245,7 @@ public class CircularListTest {
 
     @Test
     public void testEqualOfTwoStrategy() {
-        addElementsToCircularList(2, 3, 6, 2, 5, 2, 3);
+        addElementsToCircularList(List.of(2, 3, 6, 2, 5, 2, 3));
         final List<Integer> exceptedList = new ArrayList<>(Arrays.asList(2, 2, 2));
         final List<Optional<Integer>> optionalListValue = this.getAllNextOptionalList(exceptedList.size(), new EqualTwoStrategy());
 
@@ -247,11 +253,5 @@ public class CircularListTest {
             assertFalse(optionalListValue.get(i).isEmpty());
             assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
         }
-    }
-
-    /* Abstract Factory */
-    @Test
-    public void testAbstractFactoryStrategy() {
-
     }
 }
