@@ -88,7 +88,6 @@ public class CircularListImpl implements CircularList {
                 }
             }
             if (this.index != 0) {
-                System.out.println("oooo");
                 this.index = 0;
                 return next(strategy);
             }
