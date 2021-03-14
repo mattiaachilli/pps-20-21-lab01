@@ -35,24 +35,28 @@ public class CircularListImpl implements CircularList {
     @Override
     public Optional<Integer> next() {
         Optional<Integer> optionalInteger = Optional.empty();
-        if (size() > 0) {
-            return next(element -> true);
+        if (this.size() > 0) {
+            return this.next(element -> true);
         }
         return optionalInteger;
+    }
+
+    private void decrementIndex() {
+        if (this.index - 1 < 0) { //Fix index
+            this.index = circularList.size() - 1;
+        } else {
+            this.index--;
+        }
     }
 
     @Override
     public Optional<Integer> previous() {
         Optional<Integer> optionalInteger = Optional.empty();
-        if (size() > 0) {
-            if(this.firstTime) {
+        if (this.size() > 0) {
+            if(this.firstTime) { //If first time return the first element
                 this.firstTime = false;
             } else {
-                if (this.index - 1 < 0) {
-                    this.index = circularList.size() - 1;
-                } else {
-                    this.index--;
-                }
+                this.decrementIndex();
             }
             optionalInteger = Optional.of(circularList.get(this.index));
         }
@@ -68,18 +72,18 @@ public class CircularListImpl implements CircularList {
     @Override
     public Optional<Integer> next(final SelectStrategy strategy) {
         Optional<Integer> optionalInteger = Optional.empty();
-        if (size() > 0) {
-            if(this.index > circularList.size() - 1) {
+        if (this.size() > 0) {
+            if(this.index > circularList.size() - 1) { //Fix index
                 this.index = 0;
             }
-            for (int i = this.index; i < circularList.size(); i++) {
+            for (int i = this.index; i < circularList.size(); i++) { //Resumes from previous index
                 if (strategy.apply(circularList.get(i))) {
                     optionalInteger = Optional.of(circularList.get(i));
-                    this.index = i + 1;
+                    this.index = i + 1; //Update index
                     return optionalInteger;
                 }
             }
-            if (this.index != 0) {
+            if (this.index != 0) { //The element existed so it's necessary to recall method
                 this.index = 0;
                 return next(strategy);
             }
