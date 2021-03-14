@@ -33,14 +33,10 @@ public class CircularListTest {
     private List<Optional<Integer>> getAllNextOptionalList(final int numberElements, final SelectStrategy strategy, final CircularList circularList) {
         final List<Optional<Integer>> optionalValue = new ArrayList<>();
         if (numberElements > 0) {
-            if(strategy != null) {
-                for (int i = 0; i < numberElements; i++) {
-                    optionalValue.add(circularList.next(strategy));
-                }
-            } else {
-                for (int i = 0; i < numberElements; i++) {
-                    optionalValue.add(circularList.next());
-                }
+            for (int i = 0; i < numberElements; i++) {
+                final Optional<Integer> optionalInteger = strategy != null ?
+                        circularList.next(strategy) : circularList.next();
+                optionalValue.add(optionalInteger);
             }
         }
         return optionalValue;
@@ -104,9 +100,11 @@ public class CircularListTest {
     }
 
     @Test
-    public void testEmptyNext() {
+    public void testEmptyNextPrevious() {
         assertTrue(circularList.next().isEmpty());
+        assertTrue(circularList.previous().isEmpty());
     }
+
 
     @Test
     public void testSimplePrevious() {
@@ -130,11 +128,6 @@ public class CircularListTest {
             assertFalse(optionalListValue.get(i).isEmpty());
             assertEquals(exceptedList.get(i), optionalListValue.get(i).get());
         }
-    }
-
-    @Test
-    public void testEmptyPrevious() {
-        assertTrue(circularList.previous().isEmpty());
     }
 
     @Test
