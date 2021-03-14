@@ -31,20 +31,12 @@ public class CircularListImpl implements CircularList {
         return circularList.isEmpty();
     }
 
+
     @Override
     public Optional<Integer> next() {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
-            if (this.firstTime) {
-                this.firstTime = false;
-            } else {
-                if (this.index + 1 == circularList.size()) {
-                    this.index = 0;
-                } else {
-                    this.index++;
-                }
-            }
-            optionalInteger = Optional.of(circularList.get(this.index));
+            return next(element -> true);
         }
         return optionalInteger;
     }
@@ -77,7 +69,7 @@ public class CircularListImpl implements CircularList {
     public Optional<Integer> next(final SelectStrategy strategy) {
         Optional<Integer> optionalInteger = Optional.empty();
         if (size() > 0) {
-            if(this.index >= circularList.size() - 1) {
+            if(this.index > circularList.size() - 1) {
                 this.index = 0;
             }
             for (int i = this.index; i < circularList.size(); i++) {
