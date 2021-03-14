@@ -4,21 +4,21 @@ package lab01.example.model;
  * This class represent a particular instance of a SimpleBankAccountAtm.
  * In particular, a Simple Bank Account ATM allows always the deposit with 1$ fee
  */
-public class SimpleBankAccountAtm extends SimpleBankAccount implements BankAccount {
+public class SimpleBankAccountAtm extends AbstractBankAccount {
 
-    public final static int FEE = 1;
+    public final static double TRANSACTION_FEE = 1;
 
-    public SimpleBankAccountAtm(AccountHolder holder, double balance) {
-        super(holder, balance);
+    public SimpleBankAccountAtm(final AccountHolder accountHolder, final double balance) {
+        super(accountHolder, balance);
     }
 
     @Override
-    public void deposit(int usrID, double amount) {
-        super.deposit(usrID, amount - FEE);
+    protected double getWithdrawFee() {
+        return TRANSACTION_FEE;
     }
 
     @Override
-    public void withdraw(int usrID, double amount) {
-        super.withdraw(usrID, amount - FEE);
+    protected double getDepositFee() {
+        return TRANSACTION_FEE;
     }
 }
