@@ -20,10 +20,6 @@ public abstract class AbstractBankAccount implements BankAccount {
         return this.balance;
     }
 
-    protected final void updateBalance(final double amount) {
-        this.balance += amount;
-    }
-
     protected abstract double getWithdrawFee();
     protected abstract double getDepositFee();
 
@@ -37,7 +33,7 @@ public abstract class AbstractBankAccount implements BankAccount {
     @Override
     public final void withdraw(int usrID, double amount) {
         if (checkUser(usrID) && isWithdrawAllowed(amount)) {
-            this.balance = this.balance + amount - getWithdrawFee();
+            this.balance = this.balance - amount - getWithdrawFee();
         }
     }
 
